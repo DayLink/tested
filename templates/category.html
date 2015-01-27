@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ category.title }}
+{% endblock %}
+{% block content %}
+    {% for post in posts %}
+        <h2 class="blog-post-title"><a href="{% url "view_post" post.category.slug post.slug %}">{{ post.title}}</a></h2>
+        <p class="blog-post-meta">{{ post.date }}</p>
+        <p>{{ post.content|truncatewords:10 }}</p>
+        <hr>
+    {% endfor %}
+        <div class="pagination-holder text-center">
+            <ul class="pagination pagination-sm">
+                {% if posts.has_previous %}
+                    <li class="a"><a href="?page={{ posts.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span class="next">&laquo;</span></li>
+                {% endif %}
+                {% if posts.page_range_data.show_first %}
+                    <li><a href="?page=1" class="page">1</a></li>
+                    <li><span >...</span></li>
+                {% endif %}
+                {% for i in posts.page_range_data.page_range %}
+                    {% ifequal i posts.number %}
+                        <li class="active"><a href="" class="page">{{ i }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}" class="page">{{ i }}</a></li>
+                    {% endifequal %}
+                {% endfor %}
+                {% if posts.page_range_data.show_last %}
+                    <li><span >...</span></li>
+                    <li><a href="?page={{ posts.paginator.num_pages }}" class="page">{{ posts.paginator.num_pages }}</a></li>
+                {% endif %}
+
+                {% if posts.has_next %}
+                    <li class="next"><a href="?page={{ posts.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span class="next">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </div>
+{% endblock %}

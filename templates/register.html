@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}
+    Регистрация
+{% endblock %}
+{% block content %}
+ <form action="" method="post">
+{% csrf_token %}
+{% if form.errors%}<p>Исправте следующие поля:</p>
+{% for error in form.non_field_errors %}
+    <font color="red" class="error">{{ error }}</font>
+    {% endfor %}
+{% endif %}
+
+<div class=register.div">
+     <p><label for="username"{% if form.username.errors %} class="error"{% endif %}>Username:</label> {{ form.username }}</p>
+     {% if form.username.errors %}<font color="red" class="error">{{ form.username.errors }}</font>{% endif %}
+</div>
+<div class=register.div">
+     <p><label for="name"{% if form.name.errors %} class="error"{% endif %}>Name:</label> {{ form.name }}</p>
+     {% if form.name.errors %}<font color="red" class="error">{{ form.name.errors }}</font>{% endif %}
+</div>
+<div class=register.div">
+     <p><label for="email"{% if form.email.errors %} class="error"{% endif %}>Email:</label>  {{ form.email }}</p>
+     {% if form.email.errors %}<font color="red" class="error">{{ form.email.errors }}</font>{% endif %}
+</div>
+<div class=register.div">
+     <p><label for="password"{% if form.password.errors %} class="error"{% endif %}>Password:</label> {{ form.password }}</p>
+     {% if form.password.errors %}<font color="red" class="error">{{ form.password.errors }}</font>{% endif %}
+</div>
+<div class=register.div">
+     <p><label for="password1"{% if form.password1.errors %} class="error"{% endif %}>Verify Password:</label> {{ form.password1 }}</p>
+     {% if form.password1.errors %}<font color="red" class="error">{{ form.password1.errors }}</font>{% endif %}
+</div>
+<div class=register.div">
+     <p><label for="gender"{% if form.gender.errors %} class="error"{% endif %}>Gender:</label> {{ form.gender }}</p>
+     {% if form.gender.errors %}<font color="red" class="error">{{ form.gender.errors }}</font>{% endif %}
+</div>
+<div class="bfh-datepicker" data-min="01/01/2000" data-max="today" data-close="false">
+    <input class="datepicker">
+</div>
+
+
+<div class="bfh-datepiker">
+     <p><label for="date_of_birth"{% if form.date_of_birth.errors %} class="error"{% endif %}>Birthday:</label> {{ form.date_of_birth }}</p>
+     {% if form.date_of_birth.errors %}<font color="red" class="error">{{ form.date_of_birth.errors }}</font>{% endif %}
+</div>
+
+<button type="submit"  class="btn btn-primary">Зарегистрироваться</button>
+ </form>
+{% endblock %}

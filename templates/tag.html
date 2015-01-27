@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ tag.name }}
+{% endblock %}
+{% block content %}
+  Tag: {{ tag.name }}
+  Posts:<br>
+    {% for post in posts %}
+        <h1><a href="{% url "view_post" post.category.slug post.slug %}">{{ post.title}} // {{ post.content }}- <small
+                >{{ post.date }}</small></a></h1>
+        <hr>
+    {% endfor %}
+{% endblock %}

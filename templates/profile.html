@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+{% thumbnail request.user.avatar "200x250" crop="center" as im %}
+    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+{% endthumbnail %}
+ <p>Name: {{ request.user.name }}</p>
+ <p>Birthday: {{ request.user.date_of_birth }}</p>
+
+{% endblock %}

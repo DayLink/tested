@@ -1,0 +1,153 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link href="{{ STATIC_URL }}css/datepicker.css"  rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/blog.css" rel="stylesheet">
+    <script src="{{ STATIC_URL }}js/jquery-1.11.2.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.datepicker').datepicker();
+        });
+    </script>
+    <script type="text/javascript" src="/admin/jsi18n/"></script>
+    <script type="text/javascript" src="/static/admin/js/core.js"></script>
+    <script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js">        </script>
+    <script type="tepxt/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+    <script type="text/javascript" src="/static/admin/js/actions.min.js"></script>
+    <script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+    <script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+</head>
+<body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item " href="/">Главная</a>
+            {% for menuitem in all_menu %}
+                 <a class="blog-nav-item" href="{{ menuitem.url }}">{{ menuitem.title }}</a>
+            {% endfor %}
+
+{#            <div class="btn-group navbar-right" id="nav-profile-dropdown">#}
+{#                <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">#}
+{#					<i class="glyphicon glyphicon-user"></i>#}
+{#					<span class="caret"></span>#}
+{#                </button>#}
+{#                <ul class="dropdown-menu">#}
+{#                    {% if user.is_authenticated %}#}
+{#                        <li role="presentation"><a role="menuitem" tabindex="-1" href="/profile">Профиль</a></li>#}
+{#                        <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout/?next={{ request.path }}">Выход</a></li>#}
+{#                    {% else %}#}
+{#                        <li>#}
+{#                            <form class="navbar-form" action="/login/?next={{ request.path }}" method="post">#}
+{#                                {% csrf_token %}#}
+{#					            <label>Логин<br />#}
+{#					            <input type="text" placeholder="Username" class="form-control" value="" name="username" size="15"></label>#}
+{#                                <label>Пароль<br />#}
+{#					            <input type="password" placeholder="Password" class="form-control" value="" name="password" size="15" /></label>#}
+{#				                <label><a href="/register/" name="register">Регистрация</a></label>#}
+{#					            <input type="submit" name="submit" id="submit" class="btn btn-primary" value="Вход"  />#}
+{#					            <a href="/resetpassword/" class="lost-password" >Забыли пароль?</a>#}
+{#			                </form>#}
+{#                        </li>#}
+{##}
+{#                    {% endif %}#}
+{##}
+{#                </ul>#}
+{#			</div>#}
+
+            {% if user.is_authenticated %}
+                <ul class="nav  navbar-right">
+                    <li class="dropdown">
+                        <a  class="dropdown-toggle btn-sm"  data-toggle="dropdown" role="button" aria-expanded="true" aria-controls="navbar"><span
+                                class="glyphicon glyphicon-user"></span><span
+                                class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" >
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="/profile">Профиль</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout/?next={{ request.path }}">Выход</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            {% else %}
+                <form class="navbar-form navbar-right" action="/login/?next={{ request.path }}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" placeholder="Username" class="form-control" name="username" size="10" value="">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control" name="password" size="10" value="">
+                    </div>
+                    <button type="submit"  class="btn btn-primary">Вход</button>
+                    <a href="/register/" name="register" class="btn btn-primary">Регистрация</a>
+                </form>
+            {% endif %}
+        </nav>
+      </div>
+    </div>
+
+<div class="container">
+    <div class="blog-header">
+        <h1 class="blog-title">Добро пожаловать </h1>
+        <p class="lead blog-description">Здесь вы найдете много интересного...</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+
+{% block content %}
+
+{% endblock %}
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module">
+                <form class="nav   hidden-sm" role="search" action="/search/" method="get">
+                    <div class="form-group">
+                        <input type="text" name="q" class="form-control" value="{{ form.q.value }}" placeholder="Поиск">
+                    </div>
+                </form>
+            </div>
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>Чего..</h4>
+                <p>Здесь может быть какая-то <em>полезная информация</em>.</p>
+            </div>
+            <div class="sidebar-module">
+                <h4>Архив новостей</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">Январь 2015</a></li>
+                    <li><a href="#">Декабрь 2014</a></li>
+                    <li><a href="#">Ноябрь 2014</a></li>
+                </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Наши партнеры</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">GitHub</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                </ol>
+            </div>
+        </div><!-- /.blog-sidebar -->
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+    <footer class="blog-footer">
+      <p>Сайт создан на платформе <a href="http://getbootstrap.com">Bootstrap</a>.</p>
+      <p>
+        <a href="#">Вверх</a>
+      </p>
+    </footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+</body>
+</html>
